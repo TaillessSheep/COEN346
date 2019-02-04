@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+C:\Users\51509\Documents\Concordia\Courses\COEN346\Java\.metadata\.plugins\org.eclipse.jdt.core
+2380175872.index
+132620216.index
+2401048705.index

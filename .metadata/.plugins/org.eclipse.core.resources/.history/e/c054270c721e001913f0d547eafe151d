@@ -1,0 +1,28 @@
+
+public class Assignment1_main {
+
+	public static void main(String[] args) {
+
+		
+
+	}
+
+}
+
+
+class tester  implements Runnable{
+
+	@Override
+	public void run() {
+		 System.out.println("Thread started:::"+Thread.currentThread().getName());
+		 
+		 try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+}

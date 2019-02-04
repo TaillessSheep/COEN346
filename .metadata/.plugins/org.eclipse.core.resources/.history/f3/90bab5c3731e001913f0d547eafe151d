@@ -1,0 +1,45 @@
+
+public class Assignment1_main {
+
+	public static void main(String[] args) {
+		
+		Thread t1 = new Thread(new tester(), "t1");
+		t1.start();
+		try {
+			t1.join();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("haha");
+
+
+	}
+
+}
+
+
+class tester  implements Runnable{
+
+	@Override
+	public void run() {
+		System.out.println("Thread started:::"+Thread.currentThread().getName());
+
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("Thread dead:::"+Thread.currentThread().getName());
+
+	}
+
+}

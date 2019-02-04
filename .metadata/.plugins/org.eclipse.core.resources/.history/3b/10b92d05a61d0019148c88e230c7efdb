@@ -1,0 +1,26 @@
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class HelloWorld {
+
+	public static void main(String[] args) {
+
+		//		ExecutorService service = Executors.newSingleThreadExecutor();
+		//		Hello task = new
+
+		System.out.println("Hello World!");
+
+		Thread t = new Thread(new Hello());
+		t.start();
+	}
+
+
+}
+
+class Hello implements Runnable {
+	public void run(){
+		System.out.println("Hello from Hello()");
+	}
+
+
+}
