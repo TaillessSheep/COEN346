@@ -10,16 +10,16 @@ public class main {
 
 		long startTime = new Date().getTime();
 		
-		process processer = new process("myProcesser");
+		Processor processer = new Processor("myProcesser");
 		Thread t = new Thread(processer);
-		
+		t.getName();
+//		map Thread.getAllStackTraces();
 		t.start();
 		
 		for (long i=0;i<999999999;i++) {}
 
 		t.interrupt();
 		
-		processer.setI(500);
 		long startTime2 = new Date().getTime();
 		for (long i=0;i<999;i++) {try {
 			Thread.sleep(6);
@@ -28,6 +28,8 @@ public class main {
 			e.printStackTrace();
 		}
 		}
+
+		processer.setI(500);
 		long endTime2 = new Date().getTime();
 
 		long timeElapsed2 = endTime2 - startTime2;
@@ -49,6 +51,11 @@ public class main {
 
 		
 		System.out.println("Total execution time in milliseconds: " + timeElapsed);
+	}
+
+	private static void getAllStackTraces() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

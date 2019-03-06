@@ -2,7 +2,7 @@ package threadInterruption;
 
 import java.util.Date;
 
-public class process implements Runnable{
+public class Processor implements Runnable{
 
 	long startTime;
 	boolean firstRun;
@@ -10,7 +10,7 @@ public class process implements Runnable{
 	long i;
 	public String threadName;
 
-	public process(String tName) {
+	public Processor(String tName) {
 		threadName = tName;
 		firstRun = true;
 		done = false;
@@ -38,7 +38,7 @@ public class process implements Runnable{
 		}
 		try {
 			System.out.println(i);
-			for (;i<4000;i++) {Thread.sleep(1);}
+			for (;i<4000;i++) {Thread.sleep(2);}
 
 
 			long endTime = new Date().getTime();
