@@ -1,16 +1,7 @@
 
 public class Process {
-//	// to test out the class
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		Process p= new Process();
-//		System.out.println(p.isReady(1));
-//		System.out.println(p.isReady(3));
-//		System.out.println(p.run(2));
-//	}
 	
 	// member variables
-	
 	private int readyTime;
 	private int serviceTime;
 	private int remainingTime;
@@ -18,6 +9,7 @@ public class Process {
 	
 	public Process(){done=false;}
 	
+	// setters 
 	public void setReadyTime(int readTime) {
 		this.readyTime = readTime;
 	}
@@ -28,17 +20,20 @@ public class Process {
 	
 	public void setRemainingTime(int remainingTime) {
 		this.remainingTime = remainingTime;
+		// if the remaining time is none, set flag "done" to true
 		if(remainingTime<=0) {
 			remainingTime = 0;
 			done = true;
 		}
 	}
 	
+	// getters
 	public int getReadyTime() {return readyTime;}
 	public int getServiceTime() {return serviceTime;}
 	public int getRemainingTime() {return remainingTime;}
 	public boolean isDone() {return done;}
 	
+	// print info of this process
 	public void print() {
 		System.out.print(String.format("readyTime: %d", readyTime));
 		System.out.print(String.format("  serviceTime: %d", serviceTime));
@@ -53,15 +48,5 @@ public class Process {
 		else return false;
 	}
 	
-	// to simulate the running of the process
-	// given the time share of this exec
-	// return the remainingTime of the process
-	public int run(int timeShare) {
-		remainingTime -= timeShare;
-		return remainingTime;
-	}
 	
-	
-	
-
 }

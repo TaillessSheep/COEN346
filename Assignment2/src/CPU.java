@@ -1,3 +1,10 @@
+/*
+ * main class to run processor thread and scheduler thread
+ * 
+ * 
+ */
+
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -14,25 +21,27 @@ public class CPU {
 	private static int userCount;
 	private static LinkedList<String> userNames = new LinkedList<String>();
 	private static LinkedList<Process[]> userProcesses = new LinkedList<>();
+	
+	private static final String if_name = "input.txt";
+	private static final String of_name = "output.txt";
 
 	public static void main(String[] args) throws Exception {
-		String if_name = "input.txt";
-		String of_name = "output.txt";
+		
 		// reading user process
-		//System.out.println("heh?");
-		readUserProcesses("input.txt");
+		readUserProcesses(if_name);
+
+		// for debug
+//		// display test
+//		Process temp[] = null;
+//		for(int i=0;i<userCount;i++) {
+//			System.out.println(userNames.get(i)+":");
+//			temp = userProcesses.get(i);
+//			for(int j=0;j<temp.length;j++) {temp[j].print();}
+//		}
+//		
+//		System.out.println("\n");
 		
-		// display test
-		Process temp[] = null;
-		for(int i=0;i<userCount;i++) {
-			System.out.println(userNames.get(i)+":");
-			temp = userProcesses.get(i);
-			for(int j=0;j<temp.length;j++) {temp[j].print();}
-		}
-		
-		System.out.println("\n");
-		
-		// create two threads:
+		// create two processor thread and scheduler:
 		Processor processor = new Processor("MyProcess");
 		Scheduler scheduler = new Scheduler(quantum,userNames,userProcesses);
 		Thread processorThread = new Thread(processor);		
@@ -45,25 +54,12 @@ public class CPU {
 		schedulerThread.start();
 		
 		schedulerThread.join();
-		System.out.println("heh?1");
 		processorThread.join();
-		System.out.println("heh?2");
 		
-		System.out.println("heh?3");
 		String data = scheduler.getOutputData();
 		
 		writeFile(of_name, data);
-		
-		
-		
-		
-		
-//		processorThread.interrupt();
-		
-//		System.out.println(schedulerThread.isAlive());
-//		System.out.println(processorThread.isAlive());
-		
-		
+		System.out.println("All done");
 	}
 	
 	
@@ -82,12 +78,6 @@ public class CPU {
 			BufferedWriter bufferedWriter =
 					new BufferedWriter(fileWriter);
 
-			// Note that write() does not automatically
-			// append a newline character.
-			//		            bufferedWriter.write("Hello there,");
-			//		            bufferedWriter.write(" here is some text.\n");
-			//		            bufferedWriter.newLine();
-			//		            bufferedWriter.write("We are writing");
 			bufferedWriter.write(data);
 
 			// Always close files

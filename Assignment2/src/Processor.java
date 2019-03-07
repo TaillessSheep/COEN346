@@ -91,59 +91,56 @@ public class Processor implements Runnable{
 			
 			// run the process
 			task();
-//			System.out.println("heh");
 		}
 	}
 
 	
 	private void task() {
+		// flag "running" up 
 		running = true;
 		
-//		System.out.println("Starting");
-//		
-//		if (cProcess.getRemainingTime()==cProcess.getServiceTime()) {
-//			System.out.println();
-//		}
-		
-		
+		// for time check
 		long endTime;
 		int temp_ranTime;
 		
+		// timer started
 		startTime = new Date().getTime();
 		
-		
+		// main body of process running
 		try {
+			// constantly check for time and see if the process is finished 
 			do {
 				endTime = new Date().getTime();
 				temp_ranTime = (int)((endTime  - startTime)/1000);
 				Thread.sleep(10);
 			}while(temp_ranTime < cProcess.getRemainingTime());
-			
+
+			// the loop stopped before getting an interrupt
+			// means the process finished
+			// thus send a interrupt back to scheduler to notify it
 			schedulerThread.interrupt();
 			ranTime = temp_ranTime;
-//			System.out.println("Done with this process");
 		}
 		catch(InterruptedException e) {
+			// no need to do anything
 		}
 		catch(Exception e) {
 			System.out.println(e);
 		}
 		finally {
-//			System.out.println(String.format("Processor: %d", ranTime));
+			// saving the progress, no matter 
 			cProcess.setRemainingTime(cProcess.getRemainingTime()-ranTime);
 			running = false;
 		}
 		
 	}
 	
-	// to prevent running without loading a process 
-	// or running wrong process
+	// return true(means all done) if interrupted before loaded
+	// return false (means still need to go on) if interrupted after loaded
 	private boolean allDone(){
-//		System.out.println("allDone() called");
 		while(!loaded) {
 			try {
 				Thread.sleep(20);
-//				System.out.println("Waiting for data loading");
 			} catch (InterruptedException e) {
 				if(!loaded)
 					return true;
@@ -156,15 +153,16 @@ public class Processor implements Runnable{
 		readyToRun = true;
 		return false;
 	}
+	
+	
 	public void setRanTime(int ranTime) {this.ranTime = ranTime;}	
+	// wait till the next interrupt to start the process
 	private void waitForStart() {
 		while(true) {
 				try {
-//					System.out.print(readyToRun);
-//					System.out.println("Waiting for start");
 					Thread.sleep(20);
 				} catch (InterruptedException e) {
-					// resume the processor
+					// about to start the process
 					break;
 				}
 		}
