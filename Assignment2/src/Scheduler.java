@@ -1,12 +1,15 @@
 
 
 import java.util.Timer;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;;
 
 public class Scheduler implements Runnable{
 	
-	private final boolean debug = true;
+	private final boolean debug = false;
 	
 	private Processor processor;
 	private Thread processorThread;
@@ -20,6 +23,10 @@ public class Scheduler implements Runnable{
 	// each number represents time share of each processes for the corresponding readyUserName
 	private int[] schedule; 
 	
+	private String outputData;
+	
+	
+//	private final String of_name = "output.txt";
 	
 //	private long startTimer;
 //	private long currentTime
@@ -54,15 +61,15 @@ public class Scheduler implements Runnable{
 			//create the ready queue
 			makeReadyQueue();
 			//display the ready queue
-//			if(debug) {
-//				Integer[] temp_int;
-//				for(int i=0;i<readyUserIndex.length;i++) {
-//					System.out.print(userNames.get(readyUserIndex[i]));
-//					temp_int = readyQueue.get(i);
-//					for(int j=0;j<temp_int.length;j++) System.out.print(String.format("%d ", temp_int[j]));
-//				}
-//				System.out.println("");
-//			}
+			if(debug) {
+				Integer[] temp_int;
+				for(int i=0;i<readyUserIndex.length;i++) {
+					System.out.print(userNames.get(readyUserIndex[i]));
+					temp_int = readyQueue.get(i);
+					for(int j=0;j<temp_int.length;j++) System.out.print(String.format("%d ", temp_int[j]));
+				}
+				System.out.println("");
+			}
 			
 			//create the schedule
 			makeSchedule();
@@ -73,6 +80,7 @@ public class Scheduler implements Runnable{
 			}
 			runCycle();
 		}
+		processorThread.interrupt();
 	}
 	
 	public Scheduler(int quantum, LinkedList<String> userNames, LinkedList<Process[]>userProcesse) {
@@ -83,6 +91,7 @@ public class Scheduler implements Runnable{
 		this.userNames = userNames;
 		this.userProcesses = userProcesse;
 		cTime = 1;
+		outputData = "";
 	}
 	
 	private void runCycle() {
@@ -99,7 +108,7 @@ public class Scheduler implements Runnable{
 			processTimeShare = schedule[user]; // time share for each process
 			cUserProcesses = userProcesses.get(readyUserIndex[user]); // all processes of this user
 			cUserReadyProcessesIndex = readyQueue.get(user);
-			msg_user = "User "+userNames.get(user);
+			msg_user = "User "+userNames.get(readyUserIndex[user]);
 			// run 
 			for(int p=0;p<cUserReadyProcessesIndex.length;p++) {
 				cProcess = cUserProcesses[cUserReadyProcessesIndex[p]];
@@ -107,9 +116,11 @@ public class Scheduler implements Runnable{
 				// display the "output.txt" msg
 				if(cProcess.getRemainingTime() == cProcess.getServiceTime()) {
 					System.out.println(String.format("Time %d, %s, Started", cTime, msg));
+					outputData += String.format("Time %d, %s, Started", cTime, msg) + "\r\n";
 				}
 				
 				System.out.println(String.format("Time %d, %s, Resumed", cTime, msg));
+				outputData += String.format("Time %d, %s, Resumed", cTime, msg) + "\r\n";
 				
 				// loading process into processor
 				while(processor.isRunning()) {}
@@ -132,9 +143,15 @@ public class Scheduler implements Runnable{
 				
 				
 				// display the "output.txt" msg
-				System.out.println(String.format("Time %d, %s, Paused: %d", cTime, msg,cProcess.getRemainingTime()));
+//				if(debug)
+					System.out.println(String.format("Time %d, %s, Paused: %d", cTime, msg,cProcess.getRemainingTime()));
+//				else {	
+//					System.out.println(String.format("Time %d, %s, Paused", cTime, msg));
+//					outputData += String.format("Time %d, %s, Paused", cTime, msg) + "\r\n";
+//				}
 				if(cProcess.isDone()) {
 					System.out.println(String.format("Time %d, %s, Finished", cTime, msg));
+					outputData += String.format("Time %d, %s, Finished", cTime, msg) + "\r\n";
 				}
 			}
 			
@@ -151,6 +168,7 @@ public class Scheduler implements Runnable{
 		
 //		System.out.println(processor.isRunning());
 		processorThread.interrupt(); // starts the process
+		processor.setRanTime(timeShare);
 //		processorThread.
 //		while(!processor.isRunning()) {
 //			try {
@@ -259,4 +277,37 @@ public class Scheduler implements Runnable{
 		}
 		return true; // if all processes are done
 	}
+	
+	
+	public String getOutputData() {return outputData;}
+	
+	
+//	private static void writeFile(String of_name, String data) {
+//
+//		// writing result
+//		try {
+//			// Assume default encoding.
+//			FileWriter fileWriter =
+//					new FileWriter(of_name);
+//
+//			// Always wrap FileWriter in BufferedWriter.
+//			BufferedWriter bufferedWriter =
+//					new BufferedWriter(fileWriter);
+//
+//			// Note that write() does not automatically
+//			// append a newline character.
+//			//		            bufferedWriter.write("Hello there,");
+//			//		            bufferedWriter.write(" here is some text.\n");
+//			//		            bufferedWriter.newLine();
+//			//		            bufferedWriter.write("We are writing");
+//			bufferedWriter.write(data);
+//
+//			// Always close files
+//			bufferedWriter.close();
+//			fileWriter.close();
+//		}catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 }

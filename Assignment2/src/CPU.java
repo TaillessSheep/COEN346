@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -17,6 +19,7 @@ public class CPU {
 		String if_name = "input.txt";
 		String of_name = "output.txt";
 		// reading user process
+		//System.out.println("heh?");
 		readUserProcesses("input.txt");
 		
 		// display test
@@ -42,13 +45,58 @@ public class CPU {
 		schedulerThread.start();
 		
 		schedulerThread.join();
+		System.out.println("heh?1");
 		processorThread.join();
+		System.out.println("heh?2");
+		
+		System.out.println("heh?3");
+		String data = scheduler.getOutputData();
+		
+		writeFile(of_name, data);
+		
+		
+		
+		
+		
 //		processorThread.interrupt();
 		
 //		System.out.println(schedulerThread.isAlive());
 //		System.out.println(processorThread.isAlive());
 		
 		
+	}
+	
+	
+	
+	// writing data	
+	private static void writeFile(String of_name, String data) {
+
+		System.out.println("Writing data");
+		// writing result
+		try {
+			// Assume default encoding.
+			FileWriter fileWriter =
+					new FileWriter(of_name);
+
+			// Always wrap FileWriter in BufferedWriter.
+			BufferedWriter bufferedWriter =
+					new BufferedWriter(fileWriter);
+
+			// Note that write() does not automatically
+			// append a newline character.
+			//		            bufferedWriter.write("Hello there,");
+			//		            bufferedWriter.write(" here is some text.\n");
+			//		            bufferedWriter.newLine();
+			//		            bufferedWriter.write("We are writing");
+			bufferedWriter.write(data);
+
+			// Always close files
+			bufferedWriter.close();
+			fileWriter.close();
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	// reading data

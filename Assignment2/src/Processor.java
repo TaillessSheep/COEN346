@@ -105,17 +105,22 @@ public class Processor implements Runnable{
 //			System.out.println();
 //		}
 		
-		startTime = new Date().getTime();
 		
 		long endTime;
+		int temp_ranTime;
+		
+		startTime = new Date().getTime();
+		
+		
 		try {
 			do {
 				endTime = new Date().getTime();
-				ranTime = (int)((endTime - startTime)/1000);
+				temp_ranTime = (int)((endTime  - startTime)/1000);
 				Thread.sleep(10);
-			}while(ranTime < cProcess.getRemainingTime());
+			}while(temp_ranTime < cProcess.getRemainingTime());
 			
 			schedulerThread.interrupt();
+			ranTime = temp_ranTime;
 //			System.out.println("Done with this process");
 		}
 		catch(InterruptedException e) {
@@ -151,6 +156,7 @@ public class Processor implements Runnable{
 		readyToRun = true;
 		return false;
 	}
+	public void setRanTime(int ranTime) {this.ranTime = ranTime;}	
 	private void waitForStart() {
 		while(true) {
 				try {
