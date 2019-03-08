@@ -1,4 +1,4 @@
-
+//
 
 import java.util.Date;
 
@@ -82,9 +82,6 @@ public class Processor implements Runnable{
 			if(allDone()) {
 //				System.out.println("All processes done, terminating processor");
 				break;
-			}
-			else {
-//				System.out.println("Not done yet");
 			}
 			
 			waitForStart();
