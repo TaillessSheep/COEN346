@@ -1,4 +1,6 @@
-//
+//This is a class to simulate the running a processes, it communicates
+//with Scheduler class to get the 'rules'(scheule) how to run the processes
+// and performs running of a pro
 
 import java.util.Date;
 
