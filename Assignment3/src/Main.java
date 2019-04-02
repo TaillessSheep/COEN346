@@ -11,11 +11,8 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 		System.out.println("Hi World!");
-
 		
 		readCommands();
-		
-		
 		
 		
 	}
@@ -79,6 +76,7 @@ public class Main {
             String name;
             String ID;
             int var;
+            String keyWord = "Store";
             Process.commands = new Command[size];
 //            Process process = new Process();
             while((line = bufferedReader.readLine()) != null) {
@@ -88,7 +86,7 @@ public class Main {
             	ID = splited[1];
             	var = 0;
             	
-            	if (splited[0] == "Store") {
+            	if (splited[0].equals("Store")) {
             		var = Integer.parseInt(splited[2]);
             	}
             	Process.commands[++index] = new Command(name,ID,var);
@@ -130,6 +128,8 @@ public class Main {
         }
 
 	}
+	
+	
 	
 	
 

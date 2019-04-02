@@ -1,7 +1,7 @@
 import java.util.LinkedList; 
 import java.util.Queue;
 
-public class Process {
+public class Process implements Runnable{
 
 	private int ArriveTime;
 	private int BurstTime;
@@ -17,6 +17,11 @@ public class Process {
 	public static Command commands[];
 	
 	void readCommands() {}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 //	public static void defineSize(int size) {commands = new Command[size];}
 //	public static void setCommands(int index,String name, String ID,int var) {
