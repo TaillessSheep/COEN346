@@ -1,4 +1,6 @@
-
+// This is the scheduler class designed to make a ready queue
+// and further to make a schedule for all the processes and pass
+// the schedule to the Processor which will follow the schedule to run processes
 
 import java.util.Timer;
 import java.io.BufferedWriter;

@@ -1,3 +1,5 @@
+// This Processes class onlycontains all information of a process
+// But not how the processes are running 
 
 public class Process {
 	

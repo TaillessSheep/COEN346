@@ -1,4 +1,6 @@
-
+//This is a class to simulate the running a processes, it communicates
+//with Scheduler class to get the 'rules'(scheule) how to run the processes
+// and performs running of a process
 
 import java.util.Date;
 
@@ -82,9 +84,6 @@ public class Processor implements Runnable{
 			if(allDone()) {
 //				System.out.println("All processes done, terminating processor");
 				break;
-			}
-			else {
-//				System.out.println("Not done yet");
 			}
 			
 			waitForStart();
