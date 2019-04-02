@@ -14,17 +14,17 @@ public class Process {
 	public void setBT(int BT) {this.BurstTime = BT;}
 	public int getBT() {return BurstTime;}
 	
-	public static Command commands[]= new Command
+	public static Command commands[];
 	
 	void readCommands() {}
 	
-	public static void defineSize(int size) {commands = new Command[size];}
-	public static void setCommands(int index,String name, String ID,int var) {
-		System.out.println(commands.length);
-		commands[0].setServiceName(name); 
-		commands[index].setPAR1(ID);
-		commands[index].setPAR2(var);
-	}
-	
+//	public static void defineSize(int size) {commands = new Command[size];}
+//	public static void setCommands(int index,String name, String ID,int var) {
+////		System.out.println(commands.length);
+//		commands[index].setServiceName(name); 
+//		commands[index].setPAR1(ID);
+//		commands[index].setPAR2(var);
+//	}
+//	
 	
 }

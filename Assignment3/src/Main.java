@@ -79,7 +79,8 @@ public class Main {
             String name;
             String ID;
             int var;
-            Process.defineSize(size);
+            Process.commands = new Command[size];
+//            Process process = new Process();
             while((line = bufferedReader.readLine()) != null) {
             	splited = line.split(" ");
             	
@@ -87,10 +88,14 @@ public class Main {
             	ID = splited[1];
             	var = 0;
             	
-            	if (splited[0] != "Store") {
+            	if (splited[0] == "Store") {
             		var = Integer.parseInt(splited[2]);
             	}
-            	Process.setCommands(++index, splited[0], ID, var);
+            	Process.commands[++index] = new Command(name,ID,var);
+//            	Process.setCommands(index, splited[0], ID, var);
+            	
+            	
+            	Process.commands[index].print();
             	
             }
             
