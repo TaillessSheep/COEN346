@@ -3,10 +3,14 @@ import java.util.Queue;
 import java.io.*;
 
 public class Process implements Runnable{
-
+//	public static Command commands[];
+	public static Queue<Command> commands = new LinkedList<>(); 
+	
 	private int ArriveTime;
 	private int BurstTime;
 	private int ReadyForNextTime;
+	
+	
 	
 	public Process(int a,int b,int r) {
 		// TODO Auto-generated constructor stub
@@ -27,7 +31,7 @@ public class Process implements Runnable{
 	public void setBT(int BT) {this.BurstTime = BT;}
 	public int getBT() {return BurstTime;}
 	
-	public static Command commands[];
+
 	
 
 	void readCommands() {
