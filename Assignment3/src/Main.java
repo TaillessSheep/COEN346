@@ -29,41 +29,6 @@ public class Main {
         BufferedReader bufferedReader = null;
         int size = 0;
         
-        try{
-            // FileReader reads text files in the default encoding.
-            fileReader = new FileReader("commands.txt");
-
-            // Always wrap FileReader in BufferedReader.
-            bufferedReader = new BufferedReader(fileReader);
-
-            // count how many commands in total
-            
-            while((line = bufferedReader.readLine()) != null) {size++;}
-            
-            bufferedReader.close(); 
-            
-        }
-        catch(FileNotFoundException ex) {
-            System.out.println(
-                "Unable to open file '" + 
-                		"commands.txt" + "'");                
-        }
-        catch(IOException ex) {
-        	System.out.println(ex.getMessage());
-            System.out.println(
-                "Error reading file '" 
-                + "commands.txt" + "'");                  
-        }
-        finally {
-        	try {
-	        	if(fileReader!=null) {fileReader.close();}
-	        	if(bufferedReader!=null) {bufferedReader.close();}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        	
-        }
         
         try{
             // FileReader reads text files in the default encoding.
@@ -80,7 +45,7 @@ public class Main {
             String ID;
             int var;
             String keyWord = "Store";
-            Process.commands = new Command[size];
+//            Process.commands = new Command[size];
 //            Process process = new Process();
             while((line = bufferedReader.readLine()) != null) {
             	splited = line.split(" ");
@@ -92,14 +57,20 @@ public class Main {
             	if (splited[0].equals("Store")) {
             		var = Integer.parseInt(splited[2]);
             	}
-            	Process.commands[++index] = new Command(name,ID,var);
+            	Process.commands.add(new Command(name,ID,var));
 //            	Process.setCommands(index, splited[0], ID, var);
             	
             	
-            	Process.commands[index].print();
+//            	Process.commands..print();
             	
             }
-            
+            Command temp = null;
+            for(int i=0;i<Process.commands.size();i++) {
+            	temp = Process.commands.peek();
+            	Process.commands.remove();
+            	temp.print();
+            	Process.commands.add(temp);
+            }
             
             
             bufferedReader.close(); 
