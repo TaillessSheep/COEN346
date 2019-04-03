@@ -28,7 +28,6 @@
 <fullyQualifiedTypeName name="tester.t1"/>
 <fullyQualifiedTypeName name="tester"/>
 <fullyQualifiedTypeName name="Scheduler.readyQueue"/>
-<fullyQualifiedTypeName name="Process"/>
 <fullyQualifiedTypeName name="java.util.Stack"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
@@ -36,7 +35,9 @@
 <fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="Processor"/>
 <fullyQualifiedTypeName name="Scheduler"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.lang.Thread"/>
+<fullyQualifiedTypeName name="Command"/>
+<fullyQualifiedTypeName name="Process"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
 </qualifiedTypeNameHistroy>
