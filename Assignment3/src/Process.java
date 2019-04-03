@@ -5,6 +5,18 @@ public class Process implements Runnable{
 
 	private int ArriveTime;
 	private int BurstTime;
+	private int ReadyForNextTime;
+	
+	public Process(int a,int b,int r) {
+		// TODO Auto-generated constructor stub
+		ArriveTime = a;
+		BurstTime = b;
+		ReadyForNextTime = r;
+	}
+	
+	public void print() {
+		System.out.println(String.format("%d %d", ArriveTime, BurstTime));
+	}
 	
 	
 	

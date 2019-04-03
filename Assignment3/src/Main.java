@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.*;
 
 public class Main {
+	
+	public static Process[] processes = null;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -14,6 +16,7 @@ public class Main {
 		
 		readCommands();
 		
+		readProcesses();
 		
 	}
 	
@@ -130,7 +133,69 @@ public class Main {
 	}
 	
 	
-	
+	private static void readProcesses() {
+		
+		String line = null;
+		FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
+        int size = 0;
+        String[] splited;
+        int index = -1;
+        int temp1, temp2;
+		
+		try{
+            // FileReader reads text files in the default encoding.
+            fileReader = new FileReader("processes.txt");
+
+            // Always wrap FileReader in BufferedReader.
+            bufferedReader = new BufferedReader(fileReader);
+
+            //read how many processes in total
+            line = bufferedReader.readLine();
+            size = Integer.parseInt(line);
+            
+            processes = new Process[size];
+            while((line = bufferedReader.readLine()) != null) {
+            	splited = line.split(" ");
+            	
+            	temp1 = Integer.parseInt(splited[0]);
+            	temp2 = Integer.parseInt(splited[1]);
+            	
+            	processes[++index] = new Process(temp1, temp2, temp2);
+            	processes[index].print();
+            	
+            }
+            
+            
+            
+            bufferedReader.close(); 
+            
+        }
+        catch(FileNotFoundException ex) {
+            System.out.println(
+                "Unable to open file '" + 
+                		"commands.txt" + "'");                
+        }
+        catch(IOException ex) {
+        	System.out.println(ex.getMessage());
+            System.out.println(
+                "Error reading file '" 
+                + "commands.txt" + "'");                  
+        }
+//        catch(Exception exception) {
+//        	System.out.println(exception);
+//        }
+        finally {
+        	try {
+	        	if(fileReader!=null) {fileReader.close();}
+	        	if(bufferedReader!=null) {bufferedReader.close();}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+        }
+	}
 	
 
 }
