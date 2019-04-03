@@ -34,29 +34,29 @@ public class Process implements Runnable{
 
 	
 
-	void readCommands() {
-		
-		String fileName = "commands.txt";
-		String instructions = null;
-		
-		try {
-			FileReader fileReader =  new FileReader(fileName);
-			BufferedReader bufferedReader =  new BufferedReader(fileReader);
-			while((instructions = bufferedReader.readLine()) != null) {
-				System.out.println(instructions);
-			}
-			bufferedReader.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-
-	void readCommands() {}
+//	void readCommands() {
+//		
+//		String fileName = "commands.txt";
+//		String instructions = null;
+//		
+//		try {
+//			FileReader fileReader =  new FileReader(fileName);
+//			BufferedReader bufferedReader =  new BufferedReader(fileReader);
+//			while((instructions = bufferedReader.readLine()) != null) {
+//				System.out.println(instructions);
+//			}
+//			bufferedReader.close();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//	
+//
+//	void readCommands() {}
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

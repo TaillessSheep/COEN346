@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.*;
 
 public class Main {
+	public static int processSize;
 	
 	public static Process[] processes = null;
 
@@ -109,7 +110,7 @@ public class Main {
 		String line = null;
 		FileReader fileReader = null;
         BufferedReader bufferedReader = null;
-        int size = 0;
+        processSize = 0;
         String[] splited;
         int index = -1;
         int temp1, temp2;
@@ -123,16 +124,16 @@ public class Main {
 
             //read how many processes in total
             line = bufferedReader.readLine();
-            size = Integer.parseInt(line);
+            processSize= Integer.parseInt(line);
             
-            processes = new Process[size];
+            processes = new Process[processSize];
             while((line = bufferedReader.readLine()) != null) {
             	splited = line.split(" ");
             	
             	temp1 = Integer.parseInt(splited[0]);
             	temp2 = Integer.parseInt(splited[1]);
             	
-            	processes[++index] = new Process(temp1, temp2, temp2);
+             	processes[++index] = new Process(temp1, temp2, temp2);
             	processes[index].print();
             	
             }

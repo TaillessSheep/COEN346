@@ -5,10 +5,15 @@ import java.io.IOException;
 
 public class VMM {
 	
-	void readSize() {
+private int PageSize;
+int Memory[] = null;
+boolean empty[] = null;
+
+public VMM() {
+	readSize();
+}
+void readSize() {
 	String fileName = "memconfig.txt";
-	String instructions = null;
-	int PageSize;
 	String size;
 	
 	try {
@@ -17,18 +22,34 @@ public class VMM {
 		size = bufferedReader.readLine();
 		PageSize = Integer.parseInt(size);
 		bufferedReader.close();
-	} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
+	
+	Memory = new int[PageSize];
+	empty = new boolean[PageSize];
+	for(int i=0;i<PageSize;i++)
+		empty[i] = true;
+		
+}
+
+
+
+
+public void Store(String id, int value) {
+		if (checkFreeSpace()!= -1 ) {}
 		
 	}
-	public void Store(String id, int value) {
-		
-		
-	}
+
+public int checkFreeSpace(){
+		for(int i =0 ;i<PageSize;i++) {
+			if(empty[i])return i;
+		}
+		return -1;
+}
 
 }
