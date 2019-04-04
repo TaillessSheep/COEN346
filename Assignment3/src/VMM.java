@@ -1,12 +1,15 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class VMM {
 	
 private int PageSize;
-int Memory[] = null;
+int ValueMemory[] = null;
+String VariableMemory[] = null;
 boolean empty[] = null;
 
 public VMM() {
@@ -30,7 +33,7 @@ void readSize() {
 		e.printStackTrace();
 	}
 	
-	Memory = new int[PageSize];
+	ValueMemory = new int[PageSize];
 	empty = new boolean[PageSize];
 	for(int i=0;i<PageSize;i++)
 		empty[i] = true;
@@ -41,7 +44,21 @@ void readSize() {
 
 
 public void Store(String id, int value) {
-		if (checkFreeSpace()!= -1 ) {}
+		if (checkFreeSpace()!= -1 ) 
+		{	ValueMemory[checkFreeSpace()] = value;
+			VariableMemory[checkFreeSpace()] = id;
+			}else {
+				FileWriter fileWriter;
+				try {
+					fileWriter = new FileWriter("vm.txt");
+					BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+			}
 		
 	}
 
