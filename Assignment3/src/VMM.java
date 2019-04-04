@@ -23,6 +23,11 @@ static public void main(String[] args) {
 	Store("asfb",1459);
 	Store("vefnhd",456);
 	
+	
+	for (int i=0;i<PageSize;i++) {
+		System.out.println(String.format("%s: %d", VariableMemory[i],ValueMemory[i]));
+	}
+	
 }
 
 
@@ -63,14 +68,14 @@ public static  void Store(String id, int value) {
 		if (index != -1 ) {
 			ValueMemory[index] = value;
 			VariableMemory[index] = id;
-			empty[index] = true;
+			empty[index] = false;
 		}
 		else {
 			FileWriter fileWriter;
 			try {
 				fileWriter = new FileWriter("vm.txt",true);
 				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-				bufferedWriter.write("\n\r" + id + " " + String.valueOf(value));
+				bufferedWriter.write( id + " " + String.valueOf(value)+"\n");
 				// Always close files
 				bufferedWriter.close();
 				fileWriter.close();
