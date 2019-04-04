@@ -11,34 +11,34 @@ public class Main {
 	public static Process[] processes = null;
 	public static Thread[] processThreads = null;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		System.out.println("Hi World!");
-		
-		readCommands();
-		
-		readProcesses();
-		
-		processThreads[0].start();
-		try {
-			Thread.sleep(300);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		processThreads[1].start();
-		try {
-			processThreads[0].join();
-			processThreads[1].join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-	}
+//	public static void main(String[] args) {
+//		// TODO Auto-generated method stub
+//		
+//		System.out.println("Hi World!");
+//		
+//		readCommands();
+//		
+//		readProcesses();
+//		
+//		processThreads[0].start();
+//		try {
+//			Thread.sleep(300);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		processThreads[1].start();
+//		try {
+//			processThreads[0].join();
+//			processThreads[1].join();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		
+//		
+//	}
 	
 	
 	private static void readCommands() {

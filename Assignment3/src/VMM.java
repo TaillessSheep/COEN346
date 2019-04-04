@@ -7,15 +7,29 @@ import java.io.IOException;
 
 public class VMM {
 	
-private int PageSize;
-int ValueMemory[] = null;
-String VariableMemory[] = null;
-boolean empty[] = null;
+static private int PageSize;
+static int ValueMemory[] = null;
+static String VariableMemory[] = null;
+static boolean empty[] = null;
+
+
+static public void main(String[] args) {
+	System.out.println("wifwaebvisbdvhbasoduchusdhvkudvkuawvduqw");
+	
+	readSize();
+	
+	Store("vef",19);
+	Store("vaev",12);
+	Store("asfb",1459);
+	Store("vefnhd",456);
+	
+}
+
 
 public VMM() {
 	readSize();
 }
-void readSize() {
+static void readSize() {
 	String fileName = "memconfig.txt";
 	String size;
 	
@@ -34,6 +48,7 @@ void readSize() {
 	}
 	
 	ValueMemory = new int[PageSize];
+	VariableMemory = new String[PageSize];
 	empty = new boolean[PageSize];
 	for(int i=0;i<PageSize;i++)
 		empty[i] = true;
@@ -43,26 +58,32 @@ void readSize() {
 
 
 
-public void Store(String id, int value) {
-		if (checkFreeSpace()!= -1 ) 
-		{	ValueMemory[checkFreeSpace()] = value;
-			VariableMemory[checkFreeSpace()] = id;
-			}else {
-				FileWriter fileWriter;
-				try {
-					fileWriter = new FileWriter("vm.txt");
-					BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				
+public static  void Store(String id, int value) {
+	int index = checkFreeSpace();
+		if (index != -1 ) {
+			ValueMemory[index] = value;
+			VariableMemory[index] = id;
+			empty[index] = true;
+		}
+		else {
+			FileWriter fileWriter;
+			try {
+				fileWriter = new FileWriter("vm.txt",true);
+				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+				bufferedWriter.write("\n\r" + id + " " + String.valueOf(value));
+				// Always close files
+				bufferedWriter.close();
+				fileWriter.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			
+		}
 		
 	}
 
-public int checkFreeSpace(){
+public static  int checkFreeSpace(){
 		for(int i =0 ;i<PageSize;i++) {
 			if(empty[i])return i;
 		}
