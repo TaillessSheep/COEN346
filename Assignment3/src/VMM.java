@@ -113,8 +113,8 @@ public  static void Release(String id) {
 	            	
 	            	name = splited[0];
 	            	value = Integer.parseInt(splited[1]);
-	            	if(id != name) {
-	            		tempString += line+"\n";
+	            	if(!id.equals(name)) {
+	            		tempString += line +"\r\n";
 	            	}
 				}
 				bufferedReader.close();
@@ -128,7 +128,7 @@ public  static void Release(String id) {
 		
 		FileWriter fileWriter;
 		try {
-			fileWriter = new FileWriter("vm.txt",true);
+			fileWriter = new FileWriter("vm.txt");
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			bufferedWriter.write(tempString);
 			// Always close files
