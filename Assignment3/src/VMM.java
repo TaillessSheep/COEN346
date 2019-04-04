@@ -22,10 +22,12 @@ static public void main(String[] args) {
 	Store("vaev",12);
 	Store("asfb",1459);
 	Store("vefnhd",456);
+	Release("vef");
+	Release("asfb");
 	
 	
 	for (int i=0;i<PageSize;i++) {
-		System.out.println(String.format("%s: %d", VariableMemory[i],ValueMemory[i]));
+		System.out.println(String.format("%s: %d - %b", VariableMemory[i],ValueMemory[i],empty[i]));
 	}
 	
 }
@@ -88,6 +90,60 @@ public static  void Store(String id, int value) {
 		
 	}
 
+public  static void Release(String id) {
+	
+		for (int i = 0; i < PageSize; i++) {
+			if (id == VariableMemory[i]) {
+				empty[i] = true;
+				return;
+				}
+		}
+		String line;
+		String[] splited;
+		String name;
+		int value;
+		String tempString="";
+		try {
+			FileReader fileReader =  new FileReader("vm.txt");
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			
+			if(fileReader!=null) {
+				while((line = bufferedReader.readLine()) != null) {
+	            	splited = line.split(" ");
+	            	
+	            	name = splited[0];
+	            	value = Integer.parseInt(splited[1]);
+	            	if(id != name) {
+	            		tempString += line+"\n";
+	            	}
+				}
+				bufferedReader.close();
+				fileReader.close();
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		FileWriter fileWriter;
+		try {
+			fileWriter = new FileWriter("vm.txt",true);
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			bufferedWriter.write(tempString);
+			// Always close files
+			bufferedWriter.close();
+			fileWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+	    
+}
 public static  int checkFreeSpace(){
 		for(int i =0 ;i<PageSize;i++) {
 			if(empty[i])return i;
