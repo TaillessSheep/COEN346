@@ -10,6 +10,8 @@ public class Process implements Runnable{
 	private int BurstTime;
 	private int ReadyForNextTime;
 	
+	private Command cCommand;
+	
 	
 	
 	public Process(int a,int b,int r) {
@@ -32,45 +34,35 @@ public class Process implements Runnable{
 	public int getBT() {return BurstTime;}
 	
 
-	
 
-//	void readCommands() {
-//		
-//		String fileName = "commands.txt";
-//		String instructions = null;
-//		
-//		try {
-//			FileReader fileReader =  new FileReader(fileName);
-//			BufferedReader bufferedReader =  new BufferedReader(fileReader);
-//			while((instructions = bufferedReader.readLine()) != null) {
-//				System.out.println(instructions);
-//			}
-//			bufferedReader.close();
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-//	
-//
-//	void readCommands() {}
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		
+		getNextCommand();
+		
+		while(cCommand != null) {
+			cCommand.print();
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		
 	}
 	
-//	public static void defineSize(int size) {commands = new Command[size];}
-//	public static void setCommands(int index,String name, String ID,int var) {
-////		System.out.println(commands.length);
-//		commands[index].setServiceName(name); 
-//		commands[index].setPAR1(ID);
-//		commands[index].setPAR2(var);
-//	}
-//	
+	protected void getNextCommand() {
+		if(commands.isEmpty()) {
+			cCommand = null;
+			return;
+		}
+		cCommand = commands.remove();
+	}
+	
+
 
 	
 }

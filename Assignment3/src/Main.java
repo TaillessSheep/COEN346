@@ -9,6 +9,7 @@ public class Main {
 	public static int processSize;
 	
 	public static Process[] processes = null;
+	public static Thread[] processThreads = null;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -18,6 +19,24 @@ public class Main {
 		readCommands();
 		
 		readProcesses();
+		
+		processThreads[0].start();
+		try {
+			Thread.sleep(300);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		processThreads[1].start();
+		try {
+			processThreads[0].join();
+			processThreads[1].join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		
 	}
 	
@@ -67,8 +86,7 @@ public class Main {
             }
             Command temp = null;
             for(int i=0;i<Process.commands.size();i++) {
-            	temp = Process.commands.peek();
-            	Process.commands.remove();
+            	temp = Process.commands.remove();
             	temp.print();
             	Process.commands.add(temp);
             }
@@ -127,6 +145,8 @@ public class Main {
             processSize= Integer.parseInt(line);
             
             processes = new Process[processSize];
+            processThreads = new Thread[processSize];
+            
             while((line = bufferedReader.readLine()) != null) {
             	splited = line.split(" ");
             	
@@ -134,6 +154,7 @@ public class Main {
             	temp2 = Integer.parseInt(splited[1]);
             	
              	processes[++index] = new Process(temp1, temp2, temp2);
+             	processThreads[index] = new Thread(processes[index]);
             	processes[index].print();
             	
             }
