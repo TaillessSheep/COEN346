@@ -153,8 +153,8 @@ public class Main {
             	temp1 = Integer.parseInt(splited[0]);
             	temp2 = Integer.parseInt(splited[1]);
             	
-             	processes[++index] = new Process(temp1, temp2, temp2);
-             	processThreads[index] = new Thread(processes[index]);
+             	processes[++index] = new Process(temp1, temp2, temp1,String.valueOf(index+1));
+             	processThreads[index] = new Thread(processes[index],String.valueOf(index+1));
             	processes[index].print();
             	
             }

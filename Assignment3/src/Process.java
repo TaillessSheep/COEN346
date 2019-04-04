@@ -12,13 +12,16 @@ public class Process implements Runnable{
 	
 	private Command cCommand;
 	
+	private String processName;
 	
 	
-	public Process(int a,int b,int r) {
+	
+	public Process(int a,int b,int r,String name) {
 		// TODO Auto-generated constructor stub
 		ArriveTime = a;
 		BurstTime = b;
 		ReadyForNextTime = r;
+		processName = name;
 	}
 	
 	public void print() {
@@ -41,6 +44,7 @@ public class Process implements Runnable{
 		getNextCommand();
 		
 		while(cCommand != null) {
+			System.out.print (processName+": ");
 			cCommand.print();
 			
 			try {
@@ -49,6 +53,7 @@ public class Process implements Runnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			getNextCommand();
 		}
 		
 		
