@@ -10,7 +10,9 @@ public class VMM {
 static private int PageSize;
 static int ValueMemory[] = null;
 static String VariableMemory[] = null;
+
 static int LastAccessTime[]= null;
+
 static boolean empty[] = null;
 
 
