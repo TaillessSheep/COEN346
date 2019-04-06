@@ -1,5 +1,6 @@
 import java.util.LinkedList; 
 import java.util.Queue;
+import java.util.Random;
 import java.io.*;
 
 public class Process implements Runnable{
@@ -42,13 +43,17 @@ public class Process implements Runnable{
 	public void run() {
 		
 		getNextCommand();
+		Random rand = new Random();
+		int waitTime;
 		
 		while(cCommand != null) {
-			System.out.print (processName+": ");
+			
+			waitTime = rand.nextInt(1000);
+			System.out.print (String.format("%s: %d: ", processName,waitTime));
 			cCommand.print();
 			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(waitTime);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
