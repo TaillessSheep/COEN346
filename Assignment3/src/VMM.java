@@ -11,6 +11,8 @@ static private int PageSize;
 static int ValueMemory[] = null;
 static String VariableMemory[] = null;
 
+static int LastAccessTime[]= null;
+
 static boolean empty[] = null;
 
 
@@ -57,6 +59,7 @@ static void readSize() {
 	
 	ValueMemory = new int[PageSize];
 	VariableMemory = new String[PageSize];
+	LastAccessTime = new int[PageSize];
 	empty = new boolean[PageSize];
 	for(int i=0;i<PageSize;i++)
 		empty[i] = true;
@@ -140,11 +143,16 @@ public  static void Release(String id) {
 			e.printStackTrace();
 		}
 		
-		
-		
-		
-	    
 }
+public static int Lookup(String id) {
+	boolean inMemory = false;
+	for(int i=0;i<PageSize;i++) {
+		if(VariableMemory[i].equals(id)) {inMemory = true;}
+	}
+	if(inMemory)
+
+}
+
 public static  int checkFreeSpace(){
 		for(int i =0 ;i<PageSize;i++) {
 			if(empty[i])return i;
