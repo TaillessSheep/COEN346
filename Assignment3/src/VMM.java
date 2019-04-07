@@ -23,10 +23,16 @@ static public void main(String[] args) {
 	
 	Store("vef",19);
 	Store("vaev",12);
+	
 	Store("asfb",1459);
 	Store("vefnhd",456);
-	Release("vef");
-	Release("asfb");
+	Store("ha", 15);
+	Store("huh", 50);
+	
+//	Release("vef");
+//	Release("asfb");
+	
+	System.out.println(Lookup("huh"));
 	
 	
 	for (int i=0;i<PageSize;i++) {
@@ -39,6 +45,7 @@ static public void main(String[] args) {
 public VMM() {
 	readSize();
 }
+
 static void readSize() {
 	String fileName = "memconfig.txt";
 	String size;
@@ -65,9 +72,6 @@ static void readSize() {
 		empty[i] = true;
 		
 }
-
-
-
 
 public static  void Store(String id, int value) {
 	int index = checkFreeSpace();
@@ -145,6 +149,8 @@ public  static void Release(String id) {
 		}
 		
 }
+
+
 public static int Lookup(String id) {
 	//to check if it's in Memory
 	for(int i=0;i<PageSize;i++) {
@@ -152,6 +158,8 @@ public static int Lookup(String id) {
 			return ValueMemory[i];
 			}
 	}
+	
+	
 	// Check if it's in disk
 	String line;
 	String[] splited;
@@ -160,6 +168,7 @@ public static int Lookup(String id) {
 	String tempString="";
 	int lineNum =0;
 	int freeIndex= checkFreeSpace();
+	int foundValue = -1; // the value found in the disk
 	
 	try {
 		FileReader fileReader = new FileReader("vm.txt");
@@ -175,17 +184,18 @@ public static int Lookup(String id) {
             	if(!id.equals(name)) {
             		tempString += line +"\r\n";
             	}else {// when we find it in disk, then first
+            		
             		if (freeIndex != -1) { //check if there's a free space in Memory, if so we put it in Memory
 						ValueMemory[freeIndex] = value;
 						VariableMemory[freeIndex] = id;
 						LastAccessTime[freeIndex] = Schduler.clock;
 						empty[freeIndex] = false;
 						
-						return ValueMemory[freeIndex];
+						foundValue = ValueMemory[freeIndex];
 						
 					}else {//if no free space, we swap with  smallest Last access time item
 						int smallestLATIndex = 0;
-						for(int i=0; i<PageSize;i++) {
+						for(int i=0; i<PageSize-1;i++) {
 							if(LastAccessTime[i] < LastAccessTime[i+1])
 								smallestLATIndex = i;
 							else
@@ -199,9 +209,7 @@ public static int Lookup(String id) {
 						LastAccessTime[smallestLATIndex] = Schduler.clock;
 						empty[smallestLATIndex] = false;
 						
-						return ValueMemory[smallestLATIndex];
-						
-						
+						foundValue = ValueMemory[smallestLATIndex];						
 					}
             	}
 			}
@@ -210,12 +218,33 @@ public static int Lookup(String id) {
 			}
 	} catch (Exception e) {
 		// TODO: handle exception
+		System.out.println(e);
 	}
 	
-	return -1;// variable doesn't exit;
+//	if()
+	
+	if(foundValue != -1)
+		writeVM(tempString);
+	
+	return foundValue;
 	
 	
 
+}
+
+private static void writeVM(String tempString) {
+	FileWriter fileWriter;
+	try {
+		fileWriter = new FileWriter("vm.txt");
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		bufferedWriter.write(tempString);
+		// Always close files
+		bufferedWriter.close();
+		fileWriter.close();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 }
 
 
