@@ -21,7 +21,7 @@ public class Process implements Runnable{
 	public Process(int a,int b,int r,String name) {
 		Random rand = new Random();
 		int waitTime;
-		waitTime = rand.nextInt(1000);
+		waitTime = rand.nextInt(999)+1;
 		// TODO Auto-generated constructor stub
 		ArriveTime = a;
 		BurstTime = b;
@@ -59,13 +59,16 @@ public class Process implements Runnable{
 			e.printStackTrace();
 		}}
 		
-		System.out.println(String.format("Clock: %d, Process %s, Started.", Schduler.clock,processName));
+		int clock = Schduler.clock;
+		
+		System.out.println(String.format("Clock: %d, Process %s, Started.", clock,processName));
+		Schduler.output += String.format("Clock: %d, Process %s, Started.", clock,processName)+"\r\n";
 		
 		while(FinishTime > Schduler.clock) {
 			if(cCommand != null) {
 				
 				// wait till getting a command
-				waitTime = rand.nextInt(1000);
+				waitTime = rand.nextInt(999)+1;
 				
 				
 				// running the command
@@ -75,6 +78,9 @@ public class Process implements Runnable{
 					VMM.Store(cCommand.ID, cCommand.Value);
 					System.out.println (String.format("Clock: %d, Process %s, %s: Variable %s, Value: %d",
 							Schduler.clock, processName, cCommand.ServiceName,cCommand.ID,cCommand.Value));
+					Schduler.output += String.format("Clock: %d, Process %s, %s: Variable %s, Value: %d",
+							Schduler.clock, processName, cCommand.ServiceName,cCommand.ID,cCommand.Value) +"\r\n";
+					
 					break;
 					
 					
@@ -83,12 +89,18 @@ public class Process implements Runnable{
 					VMM.Release(cCommand.ID);
 					System.out.println (String.format("Clock: %d, Process %s, %s: Variable %s",
 							Schduler.clock, processName, cCommand.ServiceName,cCommand.ID));
+					Schduler.output += String.format("Clock: %d, Process %s, %s: Variable %s",
+							Schduler.clock, processName, cCommand.ServiceName,cCommand.ID) +"\r\n";
+					
 					break;
 					
 				case "Lookup":
 //					System.out.println("lookup");
 					System.out.println (String.format("Clock: %d, Process %s, %s: Variable %s, Value: %d",
 							Schduler.clock, processName, cCommand.ServiceName,cCommand.ID,VMM.Lookup(cCommand.ID)));
+					Schduler.output += String.format("Clock: %d, Process %s, %s: Variable %s, Value: %d",
+							Schduler.clock, processName, cCommand.ServiceName,cCommand.ID,VMM.Lookup(cCommand.ID)) +"\r\n";
+					
 					break;
 					
 				}
@@ -125,7 +137,9 @@ public class Process implements Runnable{
 			
 		}
 		
-		System.out.println(String.format("Clock: %d, Process %s, Finished.", Schduler.clock,processName));
+		int clock2 = Schduler.clock;
+		System.out.println(String.format("Clock: %d, Process %s, Finished.", clock2,processName));
+		Schduler.output += String.format("Clock: %d, Process %s, Finished.", clock2,processName) +"\r\n";
 		
 		
 	}

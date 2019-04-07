@@ -1,8 +1,3 @@
-import java.io.BufferedReader;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.*;
 
 public class Schduler {
@@ -11,6 +6,8 @@ public class Schduler {
 	public static Process[] processes = null;
 	public static Thread[] processThreads = null;
 	public static int clock = 1000;
+	
+	public static String output = "";
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -24,7 +21,7 @@ public class Schduler {
 		VMM.readSize();
 		
 		
-		System.out.println("---------------------------\n");
+//		System.out.println("---------------------------\n");
 		for(int i=0;i<processSize;i++) {
 			processThreads[i].start();
 		}
@@ -64,26 +61,25 @@ public class Schduler {
 			}
 		}
 		
+//		System.out.println("all done");
 //		
-//		processThreads[0].start();
-//		try {
-//			Thread.sleep(300);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		processThreads[1].start();
-//		try {
-//			processThreads[0].join();
-//			processThreads[1].join();
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		System.out.println("all done");
+//		VMM.print();
+//		System.out.println("huh");
 		
-		VMM.print();
-		System.out.println("huh");
+		
+		FileWriter fileWriter;
+		try {
+			fileWriter = new FileWriter("output.txt");
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			bufferedWriter.write(output);
+			// Always close files
+			bufferedWriter.close();
+			fileWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getStackTrace()[0]);
+			System.out.println(e.getStackTrace()[1]);
+		}
 	}
 	
 	

@@ -215,6 +215,8 @@ public static int Lookup(String id) {
 						}
 						System.out.println(String.format("Memory Manager, SWAP: Variable %s with Variable %s",
 								id,VariableMemory[smallestLATIndex]));
+						Schduler.output += String.format("Memory Manager, SWAP: Variable %s with Variable %s",
+								id,VariableMemory[smallestLATIndex]) +"\r\n";
 						tempString += VariableMemory[smallestLATIndex]+ " " + String.valueOf(ValueMemory[smallestLATIndex])+"\r\n";
 						
 						
