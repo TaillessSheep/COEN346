@@ -38,7 +38,8 @@
 <fullyQualifiedTypeName name="Process"/>
 <fullyQualifiedTypeName name="Command"/>
 <fullyQualifiedTypeName name="java.lang.Thread"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="Schduler"/>
 </qualifiedTypeNameHistroy>
