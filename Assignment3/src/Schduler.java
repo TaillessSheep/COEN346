@@ -10,35 +10,74 @@ public class Schduler {
 	
 	public static Process[] processes = null;
 	public static Thread[] processThreads = null;
-	public static int clock = 0;
+	public static int clock = 1000;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		System.out.println("Hi World!");
+//		System.out.println("Hi World!");
 		
 		readCommands();
 		
 		readProcesses();
 		
-		processThreads[0].start();
-		try {
-			Thread.sleep(300);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		processThreads[1].start();
-		try {
-			processThreads[0].join();
-			processThreads[1].join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		System.out.println("---------------------------\n");
+		for(int i=0;i<processSize;i++) {
+			processThreads[i].start();
 		}
 		
+		while (notFinished()) {
+			for(int i=0;i<processSize;i++) {
+				if(processes[i].getReadyForNextTime() <= clock) {
+					processes[i].getNextCommand();
+				}
+			}
+			
+			
+			
+			// update the clock
+			
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			clock++;
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
+		for(int i=0;i<processSize;i++) {
+			try {
+				processThreads[i].join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
+//		
+//		processThreads[0].start();
+//		try {
+//			Thread.sleep(300);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		processThreads[1].start();
+//		try {
+//			processThreads[0].join();
+//			processThreads[1].join();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		System.out.println("all done");
 	}
 	
 	
@@ -79,18 +118,13 @@ public class Schduler {
             		var = Integer.parseInt(splited[2]);
             	}
             	Process.commands.add(new Command(name,ID,var));
-//            	Process.setCommands(index, splited[0], ID, var);
-            	
-            	
-//            	Process.commands..print();
-            	
             }
             Command temp = null;
-            for(int i=0;i<Process.commands.size();i++) {
-            	temp = Process.commands.remove();
-            	temp.print();
-            	Process.commands.add(temp);
-            }
+//            for(int i=0;i<Process.commands.size();i++) {
+//            	temp = Process.commands.remove();
+//            	temp.print();
+//            	Process.commands.add(temp);
+//            }
             
             
             bufferedReader.close(); 
@@ -156,7 +190,7 @@ public class Schduler {
             	
              	processes[++index] = new Process(temp1, temp2, temp1,String.valueOf(index+1));
              	processThreads[index] = new Thread(processes[index],String.valueOf(index+1));
-            	processes[index].print();
+//            	processes[index].print();
             	
             }
             
@@ -190,6 +224,17 @@ public class Schduler {
         	
         }
 	}
+	
+	
+	private static boolean notFinished() {
+		for (int i = 0;i<processSize;i++) {
+			if(processes[i].getFT() >= clock) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	
 
 }
