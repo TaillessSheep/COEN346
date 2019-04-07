@@ -56,13 +56,6 @@ public class Process implements Runnable{
 		Random rand = new Random();
 		int waitTime;
 		
-		while(ArriveTime>Schduler.clock) {try {
-			Thread.sleep(2);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}}
-		
 		int clock = Schduler.clock;
 		
 		System.out.println(String.format("Clock: %d, Process %s, Started.", clock,processName));
