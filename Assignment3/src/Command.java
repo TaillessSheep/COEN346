@@ -6,7 +6,10 @@ public class Command {
 	public int Value;
 	
 	public void print() {
-		System.out.println(String.format( "%s %s %d",ServiceName, ID, Value) );
+		if(ID.equals("Store"))
+			System.out.println(String.format( "%s %s %d",ServiceName, ID, Value) );
+		else
+			System.out.println(String.format( "%s %s",ServiceName, ID) );
 	}
 	
 	public Command(String name, String ID, int Value) {
