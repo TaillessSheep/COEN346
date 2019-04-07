@@ -31,7 +31,7 @@ public class Schduler {
 		
 		while (notFinished()) {
 			for(int i=0;i<processSize;i++) {
-				if(processes[i].getReadyForNextTime() <= clock) {
+				if(processes[i].getReadyForNextTime() <= clock && processes[i].getFT()>clock) {
 					processes[i].getNextCommand();
 				}
 			}
@@ -41,14 +41,14 @@ public class Schduler {
 			// update the clock
 			
 			try {
-				Thread.sleep(5);
+				Thread.sleep(2);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			clock++;
 			try {
-				Thread.sleep(5);
+				Thread.sleep(2);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

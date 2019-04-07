@@ -53,7 +53,7 @@ public class Process implements Runnable{
 		int waitTime;
 		
 		while(ArriveTime>Schduler.clock) {try {
-			Thread.sleep(10);
+			Thread.sleep(2);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -73,32 +73,29 @@ public class Process implements Runnable{
 				case "Store":
 //					System.out.println("store");
 					VMM.Store(cCommand.ID, cCommand.Value);
-					
+					System.out.println (String.format("Clock: %d, Process %s, %s: Variable %s, Value: %d",
+							Schduler.clock, processName, cCommand.ServiceName,cCommand.ID,cCommand.Value));
 					break;
 					
 					
 				case "Release":
 //					System.out.println("release");
 					VMM.Release(cCommand.ID);
-					
-					
+					System.out.println (String.format("Clock: %d, Process %s, %s: Variable %s",
+							Schduler.clock, processName, cCommand.ServiceName,cCommand.ID));
 					break;
-					
-					
-					
-					
 					
 				case "Lookup":
 //					System.out.println("lookup");
-					
-					VMM.Lookup(cCommand.ID);
+					System.out.println (String.format("Clock: %d, Process %s, %s: Variable %s, Value: %d",
+							Schduler.clock, processName, cCommand.ServiceName,cCommand.ID,VMM.Lookup(cCommand.ID)));
 					break;
 					
 				}
 				
 				
-				System.out.print (String.format("Clock: %d, Process %s, ",Schduler.clock, processName));
-				cCommand.print();
+//				System.out.print (String.format("Clock: %d, Process %s, ",Schduler.clock, processName));
+//				cCommand.print();
 
 				
 				
@@ -113,14 +110,14 @@ public class Process implements Runnable{
 	//			}
 	//			getNextCommand();
 				try {
-					Thread.sleep(5);
+					Thread.sleep(2);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 			try {
-				Thread.sleep(5);
+				Thread.sleep(2);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -141,8 +138,8 @@ public class Process implements Runnable{
 		
 		ReadyForNextTime += 1000;
 		cCommand = commands.remove();
-		System.out.print(processName);
-		cCommand.print();
+//		System.out.print(processName);
+//		cCommand.print();
 	}
 	
 

@@ -166,6 +166,7 @@ public static int Lookup(String id) {
 	//to check if it's in Memory
 	for(int i=0;i<PageSize;i++) {
 		if(VariableMemory[i].equals(id)) {
+			LastAccessTime[i] = Schduler.clock;
 			return ValueMemory[i];
 			}
 	}
@@ -212,6 +213,8 @@ public static int Lookup(String id) {
 							else
 								smallestLATIndex = i+1;
 						}
+						System.out.println(String.format("Memory Manager, SWAP: Variable %s with Variable %s",
+								id,VariableMemory[smallestLATIndex]));
 						tempString += VariableMemory[smallestLATIndex]+ " " + String.valueOf(ValueMemory[smallestLATIndex])+"\r\n";
 						
 						
