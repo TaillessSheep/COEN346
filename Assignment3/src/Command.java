@@ -6,7 +6,7 @@ public class Command {
 	public int Value;
 	
 	public void print() {
-		if(ID.equals("Store"))
+		if(ServiceName.equals("Store"))
 			System.out.println(String.format( "%s %s %d",ServiceName, ID, Value) );
 		else
 			System.out.println(String.format( "%s %s",ServiceName, ID) );

@@ -67,9 +67,41 @@ public class Process implements Runnable{
 				// wait till getting a command
 				waitTime = rand.nextInt(1000);
 				
+				
+				// running the command
+				switch (cCommand.ServiceName) {
+				case "Store":
+//					System.out.println("store");
+					VMM.Store(cCommand.ID, cCommand.Value);
+					
+					break;
+					
+					
+				case "Release":
+//					System.out.println("release");
+					VMM.Release(cCommand.ID);
+					
+					
+					break;
+					
+					
+					
+					
+					
+				case "Lookup":
+//					System.out.println("lookup");
+					
+					VMM.Lookup(cCommand.ID);
+					break;
+					
+				}
+				
+				
 				System.out.print (String.format("Clock: %d, Process %s, ",Schduler.clock, processName));
 				cCommand.print();
-	//			System.out.println (String.format("%d",waitTime));
+
+				
+				
 				cCommand = null;
 				ReadyForNextTime = Schduler.clock+waitTime;
 				
@@ -109,6 +141,8 @@ public class Process implements Runnable{
 		
 		ReadyForNextTime += 1000;
 		cCommand = commands.remove();
+		System.out.print(processName);
+		cCommand.print();
 	}
 	
 

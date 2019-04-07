@@ -41,12 +41,18 @@ static boolean empty[] = null;
 //	
 //}
 
+public static void print() {
+	System.out.println("haha");
+	for (int i=0;i<PageSize;i++) 
+	System.out.println(String.format("%s: %d - %b", VariableMemory[i],ValueMemory[i],empty[i]));
+
+}
 
 public VMM() {
 	readSize();
 }
 
-static void readSize() {
+public static void readSize() {
 	String fileName = "memconfig.txt";
 	String size;
 	
@@ -58,10 +64,12 @@ static void readSize() {
 		bufferedReader.close();
 		} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
-		e.printStackTrace();
+//		System.out.println(e.getMessage());
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
-		e.printStackTrace();
+		System.out.println(e.getStackTrace()[0]);
+		System.out.println(e.getStackTrace()[1]);
+		
 	}
 	
 	ValueMemory = new int[PageSize];
@@ -92,7 +100,9 @@ public static  void Store(String id, int value) {
 				fileWriter.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
+				System.out.println(e.getStackTrace()[0]);
+				System.out.println(e.getStackTrace()[1]);
 			}
 			
 		}
@@ -145,7 +155,8 @@ public  static void Release(String id) {
 			fileWriter.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getStackTrace()[0]);
+			System.out.println(e.getStackTrace()[1]);
 		}
 		
 }
@@ -218,7 +229,8 @@ public static int Lookup(String id) {
 			}
 	} catch (Exception e) {
 		// TODO: handle exception
-		System.out.println(e);
+		System.out.println(e.getStackTrace()[0]);
+		System.out.println(e.getStackTrace()[1]);
 	}
 	
 //	if()
@@ -243,7 +255,8 @@ private static void writeVM(String tempString) {
 		fileWriter.close();
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
-		e.printStackTrace();
+		System.out.println(e.getStackTrace()[0]);
+		System.out.println(e.getStackTrace()[1]);
 	}
 }
 

@@ -21,6 +21,9 @@ public class Schduler {
 		
 		readProcesses();
 		
+		VMM.readSize();
+		
+		
 		System.out.println("---------------------------\n");
 		for(int i=0;i<processSize;i++) {
 			processThreads[i].start();
@@ -78,6 +81,9 @@ public class Schduler {
 //			e.printStackTrace();
 //		}
 		System.out.println("all done");
+		
+		VMM.print();
+		System.out.println("huh");
 	}
 	
 	
