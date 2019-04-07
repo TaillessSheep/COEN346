@@ -74,6 +74,7 @@ public static  void Store(String id, int value) {
 		if (index != -1 ) {
 			ValueMemory[index] = value;
 			VariableMemory[index] = id;
+			LastAccessTime[index] = Schduler.clock;
 			empty[index] = false;
 		}
 		else {
@@ -145,13 +146,79 @@ public  static void Release(String id) {
 		
 }
 public static int Lookup(String id) {
-	boolean inMemory = false;
+	//to check if it's in Memory
 	for(int i=0;i<PageSize;i++) {
-		if(VariableMemory[i].equals(id)) {inMemory = true;}
+		if(VariableMemory[i].equals(id)) {
+			return ValueMemory[i];
+			}
 	}
-	if(inMemory)
+	// Check if it's in disk
+	String line;
+	String[] splited;
+	String name;
+	int value;
+	String tempString="";
+	int lineNum =0;
+	int freeIndex= checkFreeSpace();
+	
+	try {
+		FileReader fileReader = new FileReader("vm.txt");
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		
+		if(fileReader!=null) {
+			while((line = bufferedReader.readLine()) != null) {
+				splited = line.split(" ");
+//				lineNum++;
+				
+            	name = splited[0];
+            	value = Integer.parseInt(splited[1]);
+            	if(!id.equals(name)) {
+            		tempString += line +"\r\n";
+            	}else {// when we find it in disk, then first
+            		if (freeIndex != -1) { //check if there's a free space in Memory, if so we put it in Memory
+						ValueMemory[freeIndex] = value;
+						VariableMemory[freeIndex] = id;
+						LastAccessTime[freeIndex] = Schduler.clock;
+						empty[freeIndex] = false;
+						
+						return ValueMemory[freeIndex];
+						
+					}else {//if no free space, we swap with  smallest Last access time item
+						int smallestLATIndex = 0;
+						for(int i=0; i<PageSize;i++) {
+							if(LastAccessTime[i] < LastAccessTime[i+1])
+								smallestLATIndex = i;
+							else
+								smallestLATIndex = i+1;
+						}
+						tempString += VariableMemory[smallestLATIndex]+ " " + String.valueOf(ValueMemory[smallestLATIndex])+"\r\n";
+						
+						
+						ValueMemory[smallestLATIndex] = value;
+						VariableMemory[smallestLATIndex] = id;
+						LastAccessTime[smallestLATIndex] = Schduler.clock;
+						empty[smallestLATIndex] = false;
+						
+						return ValueMemory[smallestLATIndex];
+						
+						
+					}
+            	}
+			}
+			bufferedReader.close();
+			fileReader.close();
+			}
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	
+	return -1;// variable doesn't exit;
+	
+	
 
 }
+
+
 
 public static  int checkFreeSpace(){
 		for(int i =0 ;i<PageSize;i++) {
