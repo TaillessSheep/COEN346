@@ -17,32 +17,7 @@ static int LastAccessTime[]= null;
 static boolean empty[] = null;
 
 
-//static public void main(String[] args) {
-//	System.out.println("wifwaebvisbdvhbasoduchusdhvkudvkuawvduqw");
-//	
-//	readSize();
-//	
-//	Store("vef",19);
-//	Store("vaev",12);
-//	
-//	Store("asfb",1459);
-//	Store("vefnhd",456);
-//	Store("ha", 15);
-//	Store("huh", 50);
-//	
-////	Release("vef");
-////	Release("asfb");
-//	
-//	System.out.println(Lookup("huh"));
-//	
-//	
-//	for (int i=0;i<PageSize;i++) {
-//		System.out.println(String.format("%s: %d - %b", VariableMemory[i],ValueMemory[i],empty[i]));
-//	}
-//	
-//}
 
-//method to print memory content
 public static void print() {
 	System.out.println("haha");
 	for (int i=0;i<PageSize;i++) 

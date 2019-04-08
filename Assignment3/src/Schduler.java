@@ -10,19 +10,23 @@ public class Schduler {
 	public static String output = "";
 
 	public static void main(String[] args) {
-		
+		// reads the processes info 
 		readProcesses();
 		
+		// reads memory config
 		VMM.readSize();
 		
-		
+		// Schedule the processes till all commands are finished
 		while (notFinished()) {
+			
+			// if the clock has arrive time, start it
 			for(int i=0;i<processSize;i++) {
 				if(processes[i].getAT()==clock)
 					processThreads[i].start();
 			}
 			
-			
+			// a process is ready to take the next command,
+			// give it one
 			for(int i=0;i<processSize;i++) {
 				if(processes[i].getReadyForNextTime() <= clock && processes[i].getFT()>clock) {
 					processes[i].getNextCommand();
@@ -47,6 +51,8 @@ public class Schduler {
 			}
 		}
 		
+		
+		// wait for all threads to finish
 		for(int i=0;i<processSize;i++) {
 			try {
 				processThreads[i].join();
@@ -55,6 +61,8 @@ public class Schduler {
 				e.printStackTrace();
 			}
 		}
+		
+		// writing the ouput to the output file
 		FileWriter fileWriter;
 		try {
 			fileWriter = new FileWriter("output.txt");
@@ -104,8 +112,6 @@ public class Schduler {
             	
              	processes[++index] = new Process(temp1, temp2, temp1,String.valueOf(index+1));
              	processThreads[index] = new Thread(processes[index],String.valueOf(index+1));
-//            	processes[index].print();
-            	
             }
             
             
