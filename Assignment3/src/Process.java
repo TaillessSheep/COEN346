@@ -83,11 +83,19 @@ public class Process implements Runnable{
 					
 				case "Release":
 //					System.out.println("release");
-					VMM.Release(cCommand.ID);
-					System.out.println (String.format("Clock: %d, Process %s, %s: Variable %s",
-							Schduler.clock, processName, cCommand.ServiceName,cCommand.ID));
-					Schduler.output += String.format("Clock: %d, Process %s, %s: Variable %s",
-							Schduler.clock, processName, cCommand.ServiceName,cCommand.ID) +"\r\n";
+					boolean success = VMM.Release(cCommand.ID);
+					if (success) {
+						System.out.println (String.format("Clock: %d, Process %s, %s: Variable %s Successed",
+								Schduler.clock, processName, cCommand.ServiceName,cCommand.ID));
+						Schduler.output += String.format("Clock: %d, Process %s, %s: Variable %s Successed",
+								Schduler.clock, processName, cCommand.ServiceName,cCommand.ID) +"\r\n";
+					}
+					else {
+						System.out.println (String.format("Clock: %d, Process %s, %s: Variable %s Failed",
+								Schduler.clock, processName, cCommand.ServiceName,cCommand.ID));
+						Schduler.output += String.format("Clock: %d, Process %s, %s: Variable %s Failed",
+								Schduler.clock, processName, cCommand.ServiceName,cCommand.ID) +"\r\n";
+					}
 					
 					break;
 					

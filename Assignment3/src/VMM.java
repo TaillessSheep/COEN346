@@ -1,3 +1,4 @@
+import java.awt.TexturePaint;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -109,55 +110,63 @@ public static  void Store(String id, int value) {
 		
 	}
 
-public  static void Release(String id) {
+public  static boolean Release(String id) {
 	
-		for (int i = 0; i < PageSize; i++) {
-			if (id == VariableMemory[i]) {
-				empty[i] = true;
-				return;
-				}
-		}
-		String line;
-		String[] splited;
-		String name;
-		int value;
-		String tempString="";
-		try {
-			FileReader fileReader =  new FileReader("vm.txt");
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			
-			if(fileReader!=null) {
-				while((line = bufferedReader.readLine()) != null) {
-	            	splited = line.split(" ");
-	            	
-	            	name = splited[0];
-	            	value = Integer.parseInt(splited[1]);
-	            	if(!id.equals(name)) {
-	            		tempString += line +"\r\n";
-	            	}
-				}
-				bufferedReader.close();
-				fileReader.close();
+	boolean found = false;
+	
+	for (int i = 0; i < PageSize; i++) {
+		if (id == VariableMemory[i]) {
+			empty[i] = true;
+			found = true;
+			return found;
 			}
-			
-			
-		} catch (Exception e) {
-			// TODO: handle exception
+	}
+	String line;
+	String[] splited;
+	String name;
+	int value;
+	String tempString="";
+	try {
+		FileReader fileReader =  new FileReader("vm.txt");
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		
+		if(fileReader!=null) {
+			while((line = bufferedReader.readLine()) != null) {
+            	splited = line.split(" ");
+            	
+            	name = splited[0];
+            	value = Integer.parseInt(splited[1]);
+            	if(!id.equals(name)) {
+            		tempString += line +"\r\n";
+            	}
+            	else {
+            		found = true;
+            	}
+			}
+			bufferedReader.close();
+			fileReader.close();
 		}
 		
-		FileWriter fileWriter;
-		try {
-			fileWriter = new FileWriter("vm.txt");
-			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-			bufferedWriter.write(tempString);
-			// Always close files
-			bufferedWriter.close();
-			fileWriter.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getStackTrace()[0]);
-			System.out.println(e.getStackTrace()[1]);
-		}
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+	}
+	
+	FileWriter fileWriter;
+	try {
+		fileWriter = new FileWriter("vm.txt");
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		bufferedWriter.write(tempString);
+		// Always close files
+		bufferedWriter.close();
+		fileWriter.close();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		System.out.println(e.getStackTrace()[0]);
+		System.out.println(e.getStackTrace()[1]);
+	}
+	
+	return found;
 		
 }
 
