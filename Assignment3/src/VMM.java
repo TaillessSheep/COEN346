@@ -135,19 +135,7 @@ public  static boolean Release(String id) {
 		// TODO: handle exception
 	}
 	//write back to vm.txt
-	FileWriter fileWriter;
-	try {
-		fileWriter = new FileWriter("vm.txt");
-		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-		bufferedWriter.write(tempString);
-		// Always close files
-		bufferedWriter.close();
-		fileWriter.close();
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		System.out.println(e.getStackTrace()[0]);
-		System.out.println(e.getStackTrace()[1]);
-	}
+	writeVM(tempString);
 	
 	return found;
 		
@@ -239,7 +227,7 @@ public static int Lookup(String id) {
 	
 
 }
-
+//write back to vm.txt
 private static void writeVM(String tempString) {
 	FileWriter fileWriter;
 	try {
@@ -257,7 +245,7 @@ private static void writeVM(String tempString) {
 }
 
 
-
+// to check if main memory has a free space
 public static  int checkFreeSpace(){
 		for(int i =0 ;i<PageSize;i++) {
 			if(empty[i])return i;
