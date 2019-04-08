@@ -20,17 +20,21 @@ public class Process implements Runnable{
 	
 	public Process(int a,int b,int r,String name) {
 		
+		// if this is the first process created
+		// read the commands from the "commands.txt"
 		if(commands == null)
 			readCommands();
 		
+		// the "runtime" of the first API call
 		Random rand = new Random();
 		int waitTime;
 		waitTime = rand.nextInt(999)+1;
-		// TODO Auto-generated constructor stub
-		ArriveTime = a;
-		BurstTime = b;
-		FinishTime = a+b;
-		ReadyForNextTime = r + waitTime;
+		
+		// initial values
+		ArriveTime = a; // the starting time of this process
+		BurstTime = b; // the running (for how long this process would live)
+		FinishTime = a+b; // the time that this process would end
+		ReadyForNextTime = r + waitTime;  // the time that this process would be ready to run the next command 
 		processName = name;
 	}
 	
@@ -51,28 +55,29 @@ public class Process implements Runnable{
 
 	@Override
 	public void run() {
-		
-//		getNextCommand();
 		Random rand = new Random();
 		int waitTime;
 		
+		// prints the starting clock time of this process
 		int clock = Schduler.clock;
-		
 		System.out.println(String.format("Clock: %d, Process %s, Started.", clock,processName));
 		Schduler.output += String.format("Clock: %d, Process %s, Started.", clock,processName)+"\r\n";
 		
+		// run till the clock reaches the finish time
 		while(FinishTime > Schduler.clock) {
+			// runs when there is a command to run
 			if(cCommand != null) {
 				
-				// wait till getting a command
+				// the waiting time for the next command
 				waitTime = rand.nextInt(999)+1;
 				
-				
 				// running the command
+				// check out what command it is and call the VMM accordingly
 				switch (cCommand.ServiceName) {
 				case "Store":
-//					System.out.println("store");
+					// API call
 					VMM.Store(cCommand.ID, cCommand.Value);
+					// print to console and store to output string
 					System.out.println (String.format("Clock: %d, Process %s, %s: Variable %s, Value: %d",
 							Schduler.clock, processName, cCommand.ServiceName,cCommand.ID,cCommand.Value));
 					Schduler.output += String.format("Clock: %d, Process %s, %s: Variable %s, Value: %d",
@@ -82,8 +87,10 @@ public class Process implements Runnable{
 					
 					
 				case "Release":
-//					System.out.println("release");
+					// API call
 					boolean success = VMM.Release(cCommand.ID);
+					// print to console and store to output string
+					// according to if the VMM found the variable or not 
 					if (success) {
 						System.out.println (String.format("Clock: %d, Process %s, %s: Variable %s Successed",
 								Schduler.clock, processName, cCommand.ServiceName,cCommand.ID));
@@ -100,7 +107,7 @@ public class Process implements Runnable{
 					break;
 					
 				case "Lookup":
-//					System.out.println("lookup");
+					// API call and return the lookup result 
 					System.out.println (String.format("Clock: %d, Process %s, %s: Variable %s, Value: %d",
 							Schduler.clock, processName, cCommand.ServiceName,cCommand.ID,VMM.Lookup(cCommand.ID)));
 					Schduler.output += String.format("Clock: %d, Process %s, %s: Variable %s, Value: %d",
@@ -110,22 +117,10 @@ public class Process implements Runnable{
 					
 				}
 				
-				
-//				System.out.print (String.format("Clock: %d, Process %s, ",Schduler.clock, processName));
-//				cCommand.print();
-
-				
-				
+				// cleans the cCommand for the next run
 				cCommand = null;
 				ReadyForNextTime = Schduler.clock+waitTime;
-				
-	//			try {
-	//				Thread.sleep(waitTime);
-	//			} catch (InterruptedException e) {
-	//				// TODO Auto-generated catch block
-	//				e.printStackTrace();
-	//			}
-	//			getNextCommand();
+
 				try {
 					Thread.sleep(2);
 				} catch (InterruptedException e) {
@@ -142,28 +137,30 @@ public class Process implements Runnable{
 			
 		}
 		
+		// prints the finishing clock time of this process
 		int clock2 = Schduler.clock;
 		System.out.println(String.format("Clock: %d, Process %s, Finished.", clock2,processName));
 		Schduler.output += String.format("Clock: %d, Process %s, Finished.", clock2,processName) +"\r\n";
-		
-		
 	}
+
 	
 	public void getNextCommand() {
+		// fetch the next command as long as we haven't run out of them
 		if(commands.isEmpty()) {
 			cCommand = null;
 			return;
 		}
 		
+		// just to prevent the scheduler to read the old ReadyForNextTime
+		// and assigns the process a new command
+		// this not the real wait time 
 		ReadyForNextTime += 1000;
+		
+		// fetch the next command and removing them from the queue
 		cCommand = commands.remove();
-//		System.out.print(processName);
-//		cCommand.print();
 	}
 	
 	private static void readCommands() {
-//		static String commendFileName = "commands.txt";
-		
 		String line = null;
 		FileReader fileReader = null;
         BufferedReader bufferedReader = null;
@@ -222,9 +219,6 @@ public class Process implements Runnable{
                 "Error reading file '" 
                 + "commands.txt" + "'");                  
         }
-//        catch(Exception exception) {
-//        	System.out.println(exception);
-//        }
         finally {
         	try {
 	        	if(fileReader!=null) {fileReader.close();}
