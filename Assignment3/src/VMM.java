@@ -16,17 +16,20 @@ static int LastAccessTime[]= null;
 
 static boolean empty[] = null;
 
+
+
 public static void print() {
 	System.out.println("haha");
 	for (int i=0;i<PageSize;i++) 
 	System.out.println(String.format("%s: %d - %b", VariableMemory[i],ValueMemory[i],empty[i]));
 
 }
-
+//testing method for VMM class stand alone
 public VMM() {
 	readSize();
 }
 
+//To get the size of main memory
 public static void readSize() {
 	String fileName = "memconfig.txt";
 	String size;
@@ -56,7 +59,10 @@ public static void readSize() {
 		
 }
 
+//Implementation of API services
+
 public static  void Store(String id, int value) {
+	//To store a variable to memory
 	int index = checkFreeSpace();
 		if (index != -1 ) {
 			ValueMemory[index] = value;
@@ -64,6 +70,7 @@ public static  void Store(String id, int value) {
 			LastAccessTime[index] = Schduler.clock;
 			empty[index] = false;
 		}
+		//when there is no space in main memory, write it at the end of disk
 		else {
 			FileWriter fileWriter;
 			try {
@@ -85,7 +92,7 @@ public static  void Store(String id, int value) {
 	}
 
 public  static boolean Release(String id) {
-	
+	// first check if it's in main memory
 	boolean found = false;
 	
 	for (int i = 0; i < PageSize; i++) {
@@ -95,6 +102,8 @@ public  static boolean Release(String id) {
 			return found;
 			}
 	}
+	
+	//when it's not in memory, check disk and release it
 	String line;
 	String[] splited;
 	String name;
@@ -103,7 +112,7 @@ public  static boolean Release(String id) {
 	try {
 		FileReader fileReader =  new FileReader("vm.txt");
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		
+		// check each line in "vm.txt"
 		if(fileReader!=null) {
 			while((line = bufferedReader.readLine()) != null) {
             	splited = line.split(" ");
@@ -111,10 +120,10 @@ public  static boolean Release(String id) {
             	name = splited[0];
             	value = Integer.parseInt(splited[1]);
             	if(!id.equals(name)) {
-            		tempString += line +"\r\n";
+            		tempString += line +"\r\n";//when this is not the id , write this line back into vm.txt
             	}
             	else {
-            		found = true;
+            		found = true;//find it in disk, not writing it back to vm.txt
             	}
 			}
 			bufferedReader.close();
@@ -125,20 +134,8 @@ public  static boolean Release(String id) {
 	} catch (Exception e) {
 		// TODO: handle exception
 	}
-	
-	FileWriter fileWriter;
-	try {
-		fileWriter = new FileWriter("vm.txt");
-		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-		bufferedWriter.write(tempString);
-		// Always close files
-		bufferedWriter.close();
-		fileWriter.close();
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		System.out.println(e.getStackTrace()[0]);
-		System.out.println(e.getStackTrace()[1]);
-	}
+	//write back to vm.txt
+	writeVM(tempString);
 	
 	return found;
 		
@@ -221,7 +218,6 @@ public static int Lookup(String id) {
 		System.out.println(e.getStackTrace()[1]);
 	}
 	
-//	if()
 	
 	if(foundValue != -1)
 		writeVM(tempString);
@@ -231,7 +227,7 @@ public static int Lookup(String id) {
 	
 
 }
-
+//write back to vm.txt
 private static void writeVM(String tempString) {
 	FileWriter fileWriter;
 	try {
@@ -249,7 +245,7 @@ private static void writeVM(String tempString) {
 }
 
 
-
+// to check if main memory has a free space
 public static  int checkFreeSpace(){
 		for(int i =0 ;i<PageSize;i++) {
 			if(empty[i])return i;
