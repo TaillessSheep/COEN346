@@ -49,7 +49,7 @@ public static void readSize() {
 		System.out.println(e.getStackTrace()[1]);
 		
 	}
-	
+	//initialize the memory
 	ValueMemory = new int[PageSize];
 	VariableMemory = new String[PageSize];
 	LastAccessTime = new int[PageSize];
