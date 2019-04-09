@@ -76,6 +76,8 @@ public class Schduler {
 			System.out.println(e.getStackTrace()[0]);
 			System.out.println(e.getStackTrace()[1]);
 		}
+		
+		VMM.print();
 	}
 	
 	
